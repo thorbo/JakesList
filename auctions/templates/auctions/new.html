@@ -1,0 +1,49 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<form action="{% url 'new' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Create Listing">
+
+    <div>
+        <label for="title">Listing Title: </label>
+        <input name="title" type="text" placeholder="Title" required>
+    </div>
+
+    <div>
+        <label for="description">Listing description: </label>
+        <textarea name="description" cols="50" rows="4">Describe the item here in the most appealing terms possible...
+    </textarea>
+    </div>
+
+    <div>
+        <label for="price">Starting Bid: </label>
+        <span>$</span><input name="price" type="number" min="0" step="0.01" placeholder="Starting Bid" required>
+    </div>
+
+    <div>
+        <label for="picture">Image Link: </label>
+        <input name="picture" type="text" placeholder="Copy image URL here">
+    </div>
+
+    <div>
+        <label for="category">Listing Category: </label>
+        <select name="category" required>
+            {% for cat in categories %}
+            <option value="{{ cat.category }}">{{cat.category}}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label for="expiration">Listing Expiration: </label>
+        <input name="expiration" type="date" required>
+    </div>
+
+
+
+
+</form>
+
+{% endblock %}

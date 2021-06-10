@@ -1,0 +1,43 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+{% if lister %}
+<a href="{% url 'close' listing.id %}" style="margin-right:30px">Close Listing</a>
+{% endif %}
+
+{% if lister and not active %}
+<h3> Winner is <span style="color:red">{{ listing.winner }}</span> </h3>
+{% endif %}
+
+
+<a href="{% url 'watch' listing.id %}">Add to WatchList</a>
+<form action="{% url 'listing' listing.id %}" method="post" style="margin:20px">
+    {% csrf_token %}
+    <span>$</span><input type="number" min="{{listing.price}}" step="0.01" value="{{listing.price}}" name="bid">
+    <input type="submit" name="subbut" value="Bid">
+</form>
+
+<h1>{{ listing.title }} </h1>
+<h3>Category: {{ listing.category }} </h3>
+<p>{{ listing.description }} </p>
+<img src="{{ listing.picture }}">
+<h5>Current price: ${{ listing.price }} </h5>
+<h6>Listing Expiration: {{ listing.expiration }}</h6>
+
+<div style="margin:20px">
+<form action="{% url 'listing' listing.id %}" method="post">
+    {% csrf_token %}
+    <textarea cols="50" rows="2" name="comments">Add comments here</textarea>
+    <input type="submit" name="subbut" value="Comment">
+</form>
+</div>
+
+<ul>
+    {% for comment in comments %}
+    <li> {{ comment.commenter }}: {{ comment.comment }} </li>
+    {% empty %}
+    <li>No comments</li>
+    {% endfor %}
+</ul>
+{% endblock %}

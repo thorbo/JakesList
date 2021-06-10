@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<h2>WatchList</h2>
+
+<ul>
+    {% for watch in watchlist %}
+    <li>
+        <a href="{% url 'listing' watch.id %}"> {{ watch }}</a>
+        <ul>
+            <li> {{ watch.description }} </li>
+            {% if watch.picture != "" %}
+            <li> <img src="{{ watch.picture }}" style="width:110px; height:90px" </li>
+            {% endif %}
+        </ul>
+    </li>
+    {% empty %}
+    <li>WatchList empty</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
